@@ -3,6 +3,7 @@ from ast import Pass
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.views.decorators.cache import cache_control
+from .models import Users
 # Create your views here.
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
@@ -14,7 +15,7 @@ def index(request):
     print("index")
     return render(request,'index.html')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def home(request):
+def reg(request):
     print("home")
     if request.method == 'POST':
         
@@ -42,6 +43,11 @@ def home(request):
         # return render(request,'home.html')
 
     return render(request,'home.html')
+def home(request):
+    user_details = Users.objects.all()
+    return render(request,'home.html',{'u_details':user_details})
+
+
 
 def logout(request):
     return Pass
