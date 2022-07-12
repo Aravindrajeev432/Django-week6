@@ -17,9 +17,29 @@ def index(request):
 def home(request):
     print("home")
     if request.method == 'POST':
-        inp = request.POST['inp']
-        print(inp)
-        return render(request,'home.html')
+        
+        fname = request.POST.get('fname')
+        lname = request.POST.get('lname')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        passw = request.POST.get('pass1')
+        address =request.POST.get('address')
+        city = request.POST.get('city')
+        staten = request.POST.get('state')
+        zip = request.POST.get('zip')
+
+        print("fname-"+fname)
+        print("lname-"+lname)
+        print("email-"+email)
+        print(phone)
+        print("pass-"+str(passw))
+        print("address-"+address)
+        print("city-"+city)
+        print("state-"+str(staten))
+        print("zip-"+str(zip))
+
+
+        # return render(request,'home.html')
 
     return render(request,'home.html')
 
