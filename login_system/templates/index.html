@@ -117,6 +117,7 @@ justify-content: center;
       $.ajax({
         type:'POST',
         url:'',
+        dataType:'json',
         data:{
           'username':username,
           'pass':pass,
@@ -124,7 +125,13 @@ justify-content: center;
         },
         success:function(responce){
           console.log(responce)
+          if(responce.success==true){
+          window.location.replace('/home')
         }
+        else{
+          alert('Invalid username')
+        }
+      }
       })
       
     })
@@ -134,11 +141,7 @@ justify-content: center;
     </script>
 
 
-<script>
-  if ( window.history.replaceState ) {
-    window.history.replaceState( null, null, window.location.href );
-  }
-  </script>
+
 
     
     <script

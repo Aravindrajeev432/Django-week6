@@ -1,7 +1,7 @@
 
 from ast import Pass
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.views.decorators.cache import cache_control
 from .models import Users
 import sys
@@ -9,22 +9,45 @@ import sys
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('pass')
+        username = request.POST['username']
+        password = request.POST['pass']
         print(username)
         print(password)
         # Raw Query
-        user_log=Users.objects.raw('SELECT login_system_users.uid,login_system_users.first_name FROM login_system_users')
+        user_log=Users.objects.raw('SELECT login_system_users.uid,login_system_users.first_name,login_system_users.passw FROM login_system_users')
         print("size of raw query variable is", end='')
         print(sys.getsizeof(user_log))
+        print(user_log)
         for i in user_log:
+            print(i.uid,end='-')
+            print(i.first_name,end='-')
+            print(i.passw)
             if username==i.first_name and password==i.passw:
                 print(i.first_name)
                 print("successs")
-                break
-            else :
-                print("failed")
+                #create session
+
+                return JsonResponse(
+                    {
+                    'success':True},
+
+                    safe=False
+                
+                )
+        else :
+            print("Failed")
+            return JsonResponse(
+                {
+                'success':False},
+
+                 safe=False
+                
+                )
+         
+            
         # print(user_log)
+        # user_log=Users.objects.filter(first_name__contains=username)
+        # print(type(user_log))
     print("index")
     return render(request,'index.html')
 
@@ -57,7 +80,9 @@ def reg(request):
         return redirect(index)
 
     return render(request,'reg.html')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def home(request):
+    print("home")
     user_details = Users.objects.all()
     return render(request,'home.html',{'u_details':user_details})
 
