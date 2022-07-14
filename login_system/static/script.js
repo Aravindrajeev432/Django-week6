@@ -8,7 +8,7 @@ var passError = document.getElementById('pass-error')
 var cityError = document.getElementById('city-error')
 var zipError = document.getElementById('zip-error')
 var stateError = document.getElementById('state-error')
-
+var unameError = documnet.getElementById('uname-error')
 function validateFName(){
     var name = document.getElementById('fname_id').value;
 
@@ -37,6 +37,21 @@ function validateLName(){
     lnameError.innerHTML = '<i class="fa fa-check" aria-hidden="true" style="color:green;"></i>';
     return true;
 }
+function validateUName(){
+    var uname = document.getElementById('uname_id').value;
+
+    if(uname.length == 0){
+        unameError.innerHTML = 'User name required';
+        return false;
+    }
+    if(!uname.match(/^[a-zA-Z ]+$/)){
+        unameError.innerHTML = 'User name cannot contain numbers';
+        return false;
+    }
+    unameError.innerHTML = '<i class="fa fa-check" aria-hidden="true" style="color:green;"></i>';
+    return true;
+}
+
 function validateMobile(){
     var mobile = document.getElementById('phone_id').value;
     console.log(mobile)
@@ -115,7 +130,7 @@ cityError.innerHTML = '<i class="fa fa-check" aria-hidden="true" style="color:gr
     function validateState(){
         var state = document.getElementById('state_id').value;
         console.log(state);
-        if (state=='Choose...'){
+        if (state=='State'){
             console.log('True')
             stateError.innerHTML='Please select a state';
             return false;
@@ -144,7 +159,7 @@ function validateZip(){
 
 
 function validateForm(){
-    if(!validateFName() || !validateLName() || !validateMobile() || !validateEmail() || !validatePassword() || !validateAddress() || !validateCity() || !validateZip()){
+    if(!validateFName() || !validateLName() || !validateMobile() || !validateEmail() || !validatePassword() || !validateAddress() || !validateCity() || !validateZip() || !validateUName()){
         submitError.style.display = 'block';
         submitError.innerHTML = 'Please fix error to submit'
         setTimeout(function(){submitError.style.display = 'none';}, 3000);

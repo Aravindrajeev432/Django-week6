@@ -10,6 +10,7 @@ class Users(models.Model):
     
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
+    user_name = models.CharField(max_length=200,default='User')
     email = models.EmailField(max_length = 254)
     phone = models.BigIntegerField()
     passw =models.CharField(max_length=200)
@@ -19,12 +20,18 @@ class Users(models.Model):
     zip = models.IntegerField()
 
     def __str__(self):
-        return self.first_name + " " + self.last_name + " " + self.passw + " " + self.address + " " + self.city + " " + self.state 
-# class UserCredential(models.Model):
+        return self.first_name + " " + self.last_name + " " + self.user_name + " " + self.passw + " " + self.address + " " + self.city + " " + self.state 
+class UserDetails(models.Model):
+    uid = models.ForeignKey('Users',on_delete=models.CASCADE,)
+    user_name= models.CharField(max_length=200,primary_key=True)
+    
+class UserCredential(models.Model):
+    uname = models.CharField(max_length=20)
+
 class Home(models.Model):
     home_id = models.AutoField(primary_key=True)
     location =models.CharField(max_length=200)
     contact = models.BigIntegerField()
     zip     = models.IntegerField()
     price   = models. IntegerField()
-    image = models.ImageField(upload_to='login_system/static/images/')
+    image = models.ImageField(upload_to='image')
