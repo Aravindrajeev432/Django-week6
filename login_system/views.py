@@ -89,9 +89,9 @@ def reg(request):
             if e.user_name==uname:
                 messages.info(request, 'Username already existed .Pick another one')
                 return redirect(reg)
-            else:
-                user_tabel=Users(first_name=fname,last_name=lname,user_name=uname,email=email,phone=phone,passw=passw,address=address,city=city,state=staten,zip=zip)
-                user_tabel.save()
+            
+        user_tabel=Users(first_name=fname,last_name=lname,user_name=uname,email=email,phone=phone,passw=passw,address=address,city=city,state=staten,zip=zip)
+        user_tabel.save()       
         # user_cre = UserDetails(user_name=uname)
         # user_cre.save()
         return redirect(index)
