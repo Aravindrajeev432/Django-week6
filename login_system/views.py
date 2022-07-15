@@ -5,9 +5,12 @@ from django.http import HttpResponse,JsonResponse
 from django.views.decorators.cache import cache_control
 from .models import Home, Users,UserDetails
 import sys
+from django.contrib import messages
 # Create your views here.
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
+    if 'username' in request.session:
+        return redirect(home)
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['pass']
@@ -56,6 +59,8 @@ def index(request):
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def reg(request):
+    if 'username' in request.session:
+        return redirect(home)
     print("reg")
     if request.method == 'POST':
         
@@ -79,9 +84,14 @@ def reg(request):
         print("city-"+city)
         print("state-"+str(staten))
         print("zip-"+str(zip))
-        user_tabel=Users(first_name=fname,last_name=lname,user_name=uname,email=email,phone=phone,passw=passw,address=address,city=city,state=staten,zip=zip)
-        
-        user_tabel.save()
+        e_user=Users.objects.all()
+        for e in e_user:
+            if e.user_name==uname:
+                messages.info(request, 'Username already existed .Pick another one')
+                return redirect(reg)
+            else:
+                user_tabel=Users(first_name=fname,last_name=lname,user_name=uname,email=email,phone=phone,passw=passw,address=address,city=city,state=staten,zip=zip)
+                user_tabel.save()
         # user_cre = UserDetails(user_name=uname)
         # user_cre.save()
         return redirect(index)
@@ -89,17 +99,20 @@ def reg(request):
     return render(request,'reg.html')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def home(request):
-    print("home")
-    # user_details = Users.objects.all()
-    # home_details = Home.objects.only("location")
-    # for k in home_details:
-    #     print(k.location)
-    home_details = Home.objects.all()
-    # for h in home_details:
-    #     print(type(h.image))
-    return render(request,'home.html',{'username':request.session['username'],'userid':request.session['uid'],'home_info':home_details})
+    if 'username' in request.session:
+        print("home")
+        # user_details = Users.objects.all()
+        # home_details = Home.objects.only("location")
+        # for k in home_details:
+        #     print(k.location)
+        home_details = Home.objects.all()
+        # for h in home_details:
+        #     print(type(h.image))
+        return render(request,'home.html',{'username':request.session['username'],'userid':request.session['uid'],'home_info':home_details})
    
-
+    else:return redirect(index)
+        
+    
 
 def logout(request):
     request.session.flush()

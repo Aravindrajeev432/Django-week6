@@ -101,10 +101,15 @@ justify-content: center;
           <h3 style="text-align:center;">{{message}}</h3>
           {% endfor %}
         </form>
-        <a href="admin"><h1>Are you the Admin</h1></a>
+        
+        <a class="btn btn-success" href="/admin" role="button">Are you the Admin</a>
+        <a class="btn btn-primary" href="/century/reg" role="button">New user? Register Here</a>
       </div>
 
     </div>
+    
+   
+   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
       $(document).on('submit','#logform',function(e)
@@ -126,7 +131,7 @@ justify-content: center;
         success:function(responce){
           console.log(responce)
           if(responce.success==true){
-          window.location.replace('/home')
+          window.location.replace('/century/home')
         }
         else{
           alert('Invalid username')

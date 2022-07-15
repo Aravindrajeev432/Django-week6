@@ -91,7 +91,7 @@ function validatePassword(){
         return false;
     }
     if(!pass.match(/^[A-Za-z]\w{7,14}$/)){
-        passError.innerHTML ='Password must contain 6 to 20 characters with at least one numeric digit, one uppercase and one lowercase letter '
+        passError.innerHTML ='Password must contain 6 to 20 characters  '
         return false;
 
     }
