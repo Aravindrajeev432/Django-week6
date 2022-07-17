@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Best Real Estate</title>
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous">
+      {% load static %}
+      <link rel="stylesheet" href="{% static 'all.css'%}">
+    <script src="{% static 'all.js'%}"></script>
+    <style>
+
+
+      body{
+        background:url("{% static 'images/logback.jpg' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+      }
+      h1{
+        font-size: 1.1rem;
+        color: red;
+      }
+      .firstbox{
+      
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+      }
+      .row{
+        
+    align-items: center;
+    justify-content: center;
+    box-shadow: 1px 0px 20px 0px #000000ad;
+    background-color: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(5px);
+    border-bottom-right-radius: 33px;
+    border-bottom-left-radius: 30px;
+      }
+      form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+}
+.form-control{
+  border: 0;
+  border-bottom:1px solid #36353529;;
+  
+  height: 60px;
+  width: 80%;
+  border-radius: 0px;
+  background: transparent;
+}
+.form-control:focus{
+  outline-width: 0px;
+  letter-spacing: 0px;
+  background: transparent;
+  outline: none !important;
+  border-color: #252c33;
+  box-shadow: 0 0 0 0.2rem #6c757d;
+  
+}
+.form-control::placeholder{
+  text-align: center;
+  letter-spacing: 3px;
+  color: black;
+}
+.form-control:focus::placeholder {
+    
+    background: transparent;
+}
+.subinputbox{
+display: flex;
+align-items: center;
+justify-content: center;
+}
+    </style>
+  
+  </head>
+  <body>
+    <div class="container-fluid firstbox">
+        <div class="row">
+<form action=" " method="POST" id="regform">
+{% csrf_token %}
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputEmail4"></label>
+            <input type="text" name ="fname" class="text-primary form-control" id="fname_id" placeholder="First name" onkeyup="validateFName()">
+            <span id="fname-error"></span><br>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputEmail4"></label>
+            <input type="text" name="lname" class="form-control" id="lname_id" placeholder="Lastname" onkeyup="validateLName()">
+            <span id="lname-error"></span><br>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">{% for message in messages %}
+            <h3 style="text-align:center;">{{message}}</h3>
+            {% endfor %}</label>
+          <input type="text" name="uname" class="form-control" id="uname_id" placeholder="Username" onkeyup="validateUName()">
+          <span id="uname-error"></span><br>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputEmail4"></label>
+        <input type="email" name="email" class="form-control" id="email_id" placeholder="Email" onkeyup="validateEmail()">
+        <span id="email-error"></span><br>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="inputEmail4"></label>
+        <input type="text" name="phone" class="form-control" placeholder="Phone number *" id="phone_id" onkeyup="validateMobile()"  >
+        <span id="mobile-error"></span>
+    </div>
+      <div class="form-group col-md-6">
+        <label for="inputPassword4"></label>
+        <input type="password" name="pass1" class="form-control" id="pass_id" placeholder="Password" onkeyup="validatePassword()">
+        <span id="pass-error"></span>  
+    </div>
+      
+    </div>
+    <div class="form-group">
+      <label for="inputAddress"></label>
+      <input type="text-area" name="address" class="form-control" id="address_id" placeholder="Address" onkeyup="validateAddress()">
+      <span id="address-error"></span>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputCity"></label>
+        <input type="text" name="city" class="form-control" placeholder="City" id="city_id" onkeyup="validateCity()">
+        <span id="city-error"></span>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="inputState"></label>
+        <select name="state" class="form-control" id="state_id" onchange="validateState()">
+          <option selected>State</option>
+          <option value="Kerala">Kerala</option>
+          <option value="TamilNadu">Tamil Nadu</option>
+          <option value="Goa">Goa</option>
+        </select>
+        <span id="state-error"></span>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="inputZip"></label>
+        <input type="number" name="zip" class="form-control" id="zip_id"  placeholder="Zipcode" onkeyup="validateZip()">
+        <span id="zip-error"></span>
+    </div>
+    </div>
+ 
+    <button type="submit" class="btn btn-primary" onclick="return validateForm()">Sign in</button>
+    <span id="btnError"></span>
+</div>
+
+</div>
+  </form>
+  <div class="row">
+    <a class="btn btn-primary" href="/century" role="button">Link</a>
+  </div>
+  
+  <script src="{% static 'script.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script>
+      $(document).on('submit','#reghome',function(e)
+     {
+      e.preventDefault();
+    
+        var fname =$('#fname_id').val()
+        
+        var lname = $('#lname_id').val()
+        var email = $('#email_id').val()
+        var phone = $('#phone_id').val()
+        var passw = $('#pass_id').val()
+        var address = $('#address_id').val()
+        var city = $('#city_id').val()
+        var state = $('#state_id').val()
+        var zip = $('#zip_id').val()
+
+
+        console.log(fname)
+      
+      
+      $.ajax({
+        type:'POST',
+        url:'',
+        data:{
+          
+          'fname':fname,
+            'lname':lname,
+            'email':email,
+            'phone':phone,
+            'passw':passw,
+            'address':address,
+            'city':city,
+            'state':state,
+            'zip':zip,
+
+          csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success:function(responce){
+          console.log(fname)
+        }
+      })
+      
+    })
+
+
+
+    </script> -->
+
+
+
+
+
+
+<script
+  src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"></script>
+
+
+  </body>
+
+  </html>
