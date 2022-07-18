@@ -8,6 +8,10 @@ import sys
 from django.contrib import messages
 # Create your views here.
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def land(request):
+    return redirect(index)
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
     if 'username' in request.session:
         return redirect(home)
